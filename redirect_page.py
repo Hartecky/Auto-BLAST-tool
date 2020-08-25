@@ -10,6 +10,6 @@ def redirect_page(driver):
     """
     # Wait until page redirect is complete
     try:
-        WebDriverWait(driver, 60).until(lambda driver: driver.find_element_by_id("ui-ncbiexternallink-95"))
+        WebDriverWait(driver, 120).until(lambda driver: driver.find_element_by_id("ui-ncbiexternallink-95"))
     except:
-        return(False)
+        driver.close()
