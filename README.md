@@ -4,7 +4,7 @@
 
 ## Description:
 
-A project whose goal was to creat a script / executable programe responsible for searching and downloading DNA sequences, from NCBI nucleotide BLAST (blastn) database. It was achieved by using Python programming language and web-scraping module Selenium. Overall all scripts are set into simple graphical user interface, made with AppJar module.
+A project whose goal was to creat a script / executable programe responsible for searching and downloading DNA sequences, from NCBI nucleotide BLAST (blastn) database automatically.
 
 ---
 ### Technologies:
