@@ -11,11 +11,10 @@ def download_sequences(driver):
     """
 
     # Prepare space and remove unnecessary files
-    if os.path.isfile('C:\\Users\\amplicon\\Downloads\\seqdump.txt'):
-        os.remove('C:\\Users\\amplicon\\Downloads\\seqdump.txt')
-    elif os.path.isfile('C:\\Users\\amplicon\\Downloads\\downloaded_sequences.txt'):
+    if os.path.isfile('C:\\Users\\amplicon\\Downloads\\downloaded_sequences.txt'):
         os.remove('C:\\Users\\amplicon\\Downloads\\downloaded_sequences.txt')
-
+    else:
+        pass
 
     # On a redirected page find and choose download option
     download_button = driver.find_element_by_id("btnDwnld")
@@ -31,4 +30,5 @@ def download_sequences(driver):
         os.rename('C:\\Users\\amplicon\\Downloads\\seqdump.txt', \
             'C:\\Users\\amplicon\\Downloads\\downloaded_sequences.txt')
     else:
+        driver.quit()
         return(False)
