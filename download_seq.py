@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+from check_file import check_file
 import os
 import time
 
@@ -9,17 +9,20 @@ def download_sequences(driver):
 
     :param driver: webdriver defined by function open_blast() in a open_browser.py file
     """
+
+    # Prepare space and remove unnecessary files
+    if os.path.isfile('C:\\Users\\amplicon\\Downloads\\seqdump.txt'):
+        os.remove('C:\\Users\\amplicon\\Downloads\\seqdump.txt')
+    elif os.path.isfile('C:\\Users\\amplicon\\Downloads\\downloaded_sequences.txt'):
+        os.remove('C:\\Users\\amplicon\\Downloads\\downloaded_sequences.txt')
+
+
     # On a redirected page find and choose download option
     download_button = driver.find_element_by_id("btnDwnld")
     download_button.click()
 
     download_fasta = driver.find_element_by_id("dwFSTAl")
     download_fasta.click()
-
-    if os.path.isfile('C:\\Users\\amplicon\\Downloads\\seqdump.txt'):
-        os.remove('C:\\Users\\amplicon\\Downloads\\seqdump.txt')
-    else:
-        pass
 
     make_check = check_file()
 
