@@ -1,38 +1,60 @@
-import time
-import os
+from appJar import gui
+from auto_blast import auto_blast
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.ui import WebDriverWait
-
-from open_browser import open_blast
-from submit_query import fill_values, refresh_page, submit_query
-from redirect_page import redirect_page
-from download_seq import download_sequences, check_file
+"""
+Main simple GUI to paste or type a sequence with an organism, and then to submit search to Auto-Blast.
+"""
 
 
 
-'''
-EXAMPLE SEQUENCE AND ORGANISM FOR TESTING
-
-test_seq = 'GCCTTATCTGCTTCTCTCTCTCCAGTGGTCTCAAATCTCTCTGTGTGATCCCACTTGTCATCCTCCTCCACAACATAAAGCTTGAGACCATAACCCTTTAGCGTTTTCGGCTAAAGCTTTCGCTGACTACTACAACAATGGCGTCCTCATCCCTTTCCCCTGCTACTCAGGTTCACTCTTGATCGTTCGAATCGAAACAATCGGGTCTCTTCGTATAGGAATTTGGGTTTTTGAAAGTTTGGTTTTTTTTTTTGGTGGCAGCTTGGTTCTAGCAGAAGTGCTTTGATGGCGATGTCAAGTGGGTTGTTTGTGAAGCCAACGAAGATGAATCATCAAATGGTTAGAAAAGAGAAGATTGGATTGAGAATTTCTTGTCAAGCGTCGAGTATTCCAGCAGACAGAGTTCCAGATATGGAAAAGAGGAAGACTTTGAATCTTCTTCTTCTTGGGGCTCTTTCTCTACCTACTGGCTACATGCTTGTCCCTTACGCTACCTTCTTTGTTCCTCCTGGAACCGGAGGTGGAGGTGGTGGTACTCCAGCCAAGGATGCCCTTGGAAACGATGTAGTTGCAGCGGAATGGCTTAAGACTCATGGTCCCGGTGACCGAACCTTGACCCAAGGATTAAAGGGAGATCCGACTTACCTAGTTGTAGAGAACGACAAGACTCTAGCGACATACGGTATCAACGCAGTGTGCACTCATCTTGGATGTGTTGTGCCATGGAACAAAGCTGAGAACAAGTTTCTATGTCCTTGCCATGGATCCCAATACAACGCCCAAGGAAGAGTCGTTAGAGGTCCAGCCCCATTGTCGCTAGCGTTGGCTCACGCGGATATAGATGAAGCTGGGAAGGTTCTTTTTGTTCCATGGGTGGAAACTGACTTCAGGACTGGTGATGCTCCATGGTGGTCTTAAGACTCTTCAACAAGAAAAAGAGAAAGATTTGGTCTTTTTGTGTAAGACTTGTTTGAATGTTCTTATAATGTATAAGCTACATTTCATCGCAATTACTCTGTCTATGAAATATTATGTTCATTCACTTCCCA'
-
-test_org = 'arabidopsis thaliana'
-'''
-
-
+# Setting GUI parametres | labels | widgets | buttons etc.
 def main():
+    def press(name):
+        """
+        Chooses between Quit and Clear button to run proper function
 
-    web_browser = open_blast()
+        :param name: Button name
+        """
+        if name == "Quit":
+            app.stop()
 
-    submit_query(web_browser, test_seq, test_org)
-    redirect_page(web_browser)
-    download_sequences(web_browser)
+        elif name == "Clear":
+            app.clearEntry("Sequence")
+            app.clearEntry("Organism")
 
-    web_browser.close()
+            app.setFocus("Sequence")
+
+
+    def submit(name):
+        """
+        Button responsible for submitting entries to run Auto-Blast
+
+        :param name: Button name
+        """
+        if name == "Submit Auto-Blast":
+            seq = app.getEntry("Sequence")
+            org = app.getEntry("Organism")
+
+            auto_blast(seq,org)
+
+    app = gui("Auto-Blast Tool", "450x450")
+
+    app.setBg("green")
+    app.setFont(16)
+    app.setResizable(False)
+
+    app.addLabel("title", "Auto Blast Tool")
+
+
+    app.addLabelEntry("Sequence")
+    app.addLabelEntry("Organism")
+
+    app.addButton("Submit Auto-Blast", submit)
+    app.addButtons(["Clear", "Quit"], press)
+
+    app.go()
+
+
 
 if __name__ == '__main__':
     main()
