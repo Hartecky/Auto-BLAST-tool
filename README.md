@@ -13,17 +13,17 @@ A project whose goal was to create a script / executable program responsible for
 - AppJar GUI
 - Microsoft Edge WebDriver compatible with Microsoft Edge version 84.0.522.63 (x64)
 
-
+---
 ### Requirements
-__Selenium module 
+__Selenium module__
 
 _pip install selenium_
 
-__AppJar GUI
+__AppJar GUI__
 
 _pip install appjar_
 
-__Microsoft Edge WebDriver
+__Microsoft Edge WebDriver__
 
 [Link to official Microsoft Developer Website](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
 
