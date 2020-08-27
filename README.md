@@ -6,6 +6,15 @@
 
 A project whose goal was to create a script / executable program responsible for searching and downloading DNA sequences, from NCBI nucleotide BLAST (blastn) database automatically.
 
+## Requirements
+- Selenium module
+> pip install selenium
+
+- AppJar GUI
+> pip install appjar
+
+- Microsoft Edge WebDriver
+[Link](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
 ---
 ### Technologies:
 - Python 3.7+
