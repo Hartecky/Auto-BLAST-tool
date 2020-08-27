@@ -8,10 +8,10 @@ A project whose goal was to create a script / executable program responsible for
 
 ## Requirements
 - Selenium module
-> pip install selenium
+_pip install selenium_
 
 - AppJar GUI
-> pip install appjar
+_pip install appjar_
 
 - Microsoft Edge WebDriver
 [Link](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
