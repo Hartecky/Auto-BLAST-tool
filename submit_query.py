@@ -47,16 +47,15 @@ def fill_values(driver, query, organism):
 
 
 def refresh_page(driver):
-    """ There will be here error with which this function will handle with"""
+    """ Reloads page"""
     driver.refresh()
 
 
 def submit_query(driver, query, organism):
     """Function made for handling BLAST main web-page in case of some CGI Text Error """
-
     try:
         fill_values(driver, query, organism)
 
     except:
-        refresh_page()
+        refresh_page(driver)
         fill_values(driver, query, organism)
