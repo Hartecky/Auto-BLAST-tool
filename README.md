@@ -19,8 +19,8 @@ _pip install appjar_
 
 - Microsoft Edge WebDriver
 
-
 [Link to official Microsoft Developer Website](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+
 ---
 ### Technologies:
 - Python 3.7+
