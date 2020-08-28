@@ -5,9 +5,10 @@ from selenium.webdriver import ActionChains
 import os
 import time
 
-file_path_1 = 'C:\\Users\\amplicon\\Downloads\\downloaded_sequences.txt'
-file_path_2 = 'C:\\Users\\amplicon\\Downloads\\seqdump.txt'
-desktop_path = 'C:\\Users\\amplicon\\Desktop'
+file_path_1 = os.path.expanduser("~")+"\\Downloads\\downloaded_sequences.txt"
+file_path_2 = os.path.expanduser("~")+"\\Downloads\\seqdump.txt"
+
+download_folder = os.path.expanduser("~")+"\\Downloads"
 
 def check_file(file_to_check, path_1, path_2):
     """Checks if a file 'seqdump.txt' is in a directory, otherwise it waits untill it will appear
@@ -37,7 +38,7 @@ def download_sequences(driver):
     download_fasta.click()
 
     # Function call to check downloading file existing
-    check_file(file_path_2, file_path_1, desktop_path)
+    check_file(file_path_2, file_path_1, download_folder)
 
     return(driver)
 
