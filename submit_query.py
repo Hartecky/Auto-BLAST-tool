@@ -5,57 +5,91 @@ from selenium.webdriver.support.ui import Select
 import time
 import os
 
-def fill_values(driver, query, organism):
-    """ Sending desired queries into textboxes, matching algorithm for 10000 sequences search and submitting blast algorithn
-
-    :param driver: webdriver defined by function open_blast() in a open_browser.py file
-    :param query: input provided by user with a DNA sequence
-    :param organism: input provided by user with an organism name
+def make_action(driver):
     """
+    Creates a selenium ActionChains object to
+    automate low level interactions on loaded website
 
-    #Enable actions
+    Parameters:
+    driver: selenium.webdriver object used in another functions.
+    Defined by function open_blast() in a open_browser.py file
+    """
     action = ActionChains(driver)
 
-    # Find and import Query
+    return action
+
+def paste_sequence(driver, query):
+    """
+    Fills defined and located textarea with sequence (string),
+    provided by user.
+
+    Parameters:
+    driver: selenium.webdriver object used in another functions.
+    Defined by function open_blast() in a open_browser.py file.
+
+    query: sequence query provided by user.
+    """
+
     search_sequence = driver.find_element_by_name("QUERY")
     search_sequence.send_keys(query)
     search_sequence.send_keys(Keys.RETURN)
 
-    # Find and import organism
-    search = driver.find_element_by_id("qorganism")
-    search.send_keys(organism)
-    element = driver.find_element_by_xpath("//input[@name='NUM_ORG']")
+    return
+
+def paste_organism(driver, action, organism):
+    """
+    Fills defined and located textarea with organism name (string),
+    provided by user. Next, it waits for hints, and choses the first one.
+
+    Parameters:
+    driver: selenium.webdriver object used in another functions.
+    Defined by function open_blast() in a open_browser.py file.
+
+    action: selenium.actionchains object which allows to interact
+    with a browser
+
+    organism: organism name provided by user.
+    """
+
+    search_organism = driver.find_element_by_id("qorganism")
+    search_organism.send_keys(organism)
+
+    list_elem = driver.find_element_by_xpath("//input[@name='NUM_ORG']")
 
     time.sleep(1)
 
     action.send_keys(Keys.ARROW_DOWN).perform()
     action.send_keys(Keys.ENTER).perform()
 
-    # Find and expand blast algorithm options
+    return
+
+"""
+Functions below are responsible for:
+    - checkbox select to show result in a new window
+    - opening more algorithm parameters
+    - changing max target sequences to 5000
+    - submitting BLAST button
+    - Quit
+
+Parameters:
+driver: selenium.webdriver object used in another functions.
+Defined by function open_blast() in a open_browser.py file.
+
+action: selenium.actionchains object which allows to interact
+with a browser
+"""
+
+def open_options(driver, action):
+
     algo_param = driver.find_element_by_id("algPar")
     algo_param.click()
 
-    # Find and choose searching target
-    select = Select(driver.find_element_by_id("NUM_SEQ"))
-    select.select_by_value("5000")
+def select_options(driver, action):
 
-    # Run
-    blast = driver.find_element_by_class_name("blastbutton")
-    blast.click()
+    select_numbers = Select(driver.find_element_by_id("NUM_SEQ"))
+    select_numbers.select_by_value("1000")
 
-    return(driver)
+def click_button(driver):
 
-
-def refresh_page(driver):
-    """ Reloads page"""
-    driver.refresh()
-
-
-def submit_query(driver, query, organism):
-    """Function made for handling BLAST main web-page in case of some CGI Text Error """
-    try:
-        fill_values(driver, query, organism)
-
-    except:
-        refresh_page(driver)
-        fill_values(driver, query, organism)
+    blast_btn = driver.find_element_by_class_name("blastbutton")
+    blast_btn.click()
