@@ -12,18 +12,13 @@ Compatible with Microsoft Edge only
 ### Technologies:
 - Python 3.7+
 - Selenium module
-- AppJar GUI
-- Microsoft Edge WebDriver compatible with Microsoft Edge version 84.0.522.63 (x64)
+- Microsoft Edge WebDriver compatible with your Microsoft Edge web browser
 
 ---
 ### Requirements
 __Selenium module__
 
 _pip install selenium_
-
-__AppJar GUI__
-
-_pip install appjar_
 
 __Microsoft Edge WebDriver__
 
