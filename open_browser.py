@@ -1,16 +1,29 @@
 from selenium import webdriver
 
-def open_blast():
-    """Opens Nucleotide Blast web page
+"""
+First function creates the instance of MS Edge Webdriver
+and keeps it in a 'driver' variable.
 
-    :return driver: web driver for MS Edge browser used in another functions
-    """
-    page_title = 'Nucleotide BLAST: Search nucleotide databases using a nucleotide query'
+Second function opens website provided in webpage
+variable inside function.
+
+Parameters:
+driver: selenium.webdriver object used in another functionse.
+"""
+
+def get_driver():
+
     # Path to webdriver API file
-    PATH = "C:\\Users\\amplicon\\Desktop\\msedgedriver.exe"
+    PATH = "C:/msedgedriver.exe"
     driver = webdriver.Edge(PATH)
 
-    # Desired website
-    driver.get("https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome")
-
     return(driver)
+
+def open_website(driver):
+
+    # Desired website
+    webpage = 'https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome'
+
+    driver.get(webpage)
+
+
