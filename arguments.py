@@ -1,27 +1,24 @@
 import argparse
 
 # ---------- START ---------- #
-parser = argparse.ArgumentParser(description='AutoBlast Tool for remote downloading sequences in Fasta format from BLAST database')
+parser = argparse.ArgumentParser(description='Remote sequence downloader from NCBI Nucleotide Blast database')
 
 # ---------- POSITIONALS ---------- #
-parser.add_argument('-seqq', metavar = '--seq_query', type=str, nargs='+',
-                    help='Input sequence query')
+parser.add_argument('-q', '--query', type=str, metavar='', required=True, help='Nucleotide sequence query')
 
-parser.add_argument('-org', metavar = '--organism', type=str, nargs='+',
-                    help='Name of the organism input')
+parser.add_argument('-o', '--organism', type=str, metavar='', required=True, help='Name of the organism input')
 
 # ---------- OPTIONALS ---------- #
+group = parser.add_mutually_exclusive_group()
 
-parser.add_argument('-ex', metavar='--exclude', type=str, nargs='?',
-                    help='Exclude provided organism (True / False)')
+group.add_argument('-e', '--exclude', type=str, metavar='', required=False, help='Exclude provided organism (True / False)')
 
-parser.add_argument('-seqn', metavar='--seq_number', type=str, nargs='?',
-                    help='Select maximum numbers of aligned sequences to download (10 / 50 / 100 / 250 / 500/ 1000/ 5000 avalaible)')
+group.add_argument('-n', '--number_seq', type=str, metavar='', required=False, help='Select maximum numbers of aligned sequences to download (10 / 50 / 100 / 250 / 500/ 1000/ 5000 avalaible)')
 
-parser.add_argument('-aln', metavar='--aligned', type=str, nargs='?',
-                    help='Download aligned sequences (True / False)')
+group.add_argument('-a', '--aligned', type=str, metavar='', required=False, help='Download aligned sequences (True / False)')
 
 # ---------- PARSE ARGS ---------- #
 args = parser.parse_args()
-#print(args.accumulate(args.integers))
-print(args.accumulate())
+
+if __name__ == '__main__':
+    main()
