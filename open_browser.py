@@ -14,8 +14,8 @@ driver: selenium.webdriver object used in another functionse.
 def get_driver():
 
     # Path to webdriver API file
-    PATH = "C:/msedgedriver.exe"
-    driver = webdriver.Edge(PATH)
+    #PATH = "C:/msedgedriver.exe"
+    driver = webdriver.Edge(executable_path=r'C:/msedgedriver.exe')
 
     return(driver)
 
