@@ -47,12 +47,13 @@ def download_sequences(driver):
     Defined by function open_blast() in a open_browser.py file
 
     """
-
+    print("DOWNLOADING START")
     # On a redirected page find and choose download option
-    download_button = driver.find_element_by_id("btnDwnld")
+    download_button = driver.find_element_by_xpath("//*[@id='btnDwnld']")
+    print(download_button)
     download_button.click()
 
-    download_fasta = driver.find_element_by_id("dwFSTAl")
+    download_fasta = driver.find_element_by_xpath("//*[@id='dwFSTAl']")
     download_fasta.click()
 
     # Function call to check downloading file existing
