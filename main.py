@@ -20,9 +20,12 @@ def main():
     select_options(driver, action)
     click_button(driver)
 
+    print("Redirection start")
     # Redirecting page and downloading seq
     redirect_page(driver)
-
-main()
-
+    download_sequences(driver)
+    
+    
+if __name__ == '__main__':
+    main()
 
