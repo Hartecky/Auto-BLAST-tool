@@ -1,5 +1,6 @@
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 from download_seq import *
 import time
 
@@ -14,11 +15,13 @@ def redirect_page(driver):
     driver: selenium.webdriver object used in another functions.
     Defined by function open_blast() in a open_browser.py file
     """
-
+    print("FUNCTION IS STARTING")
     try:
+        print("Waiting start")
         WebDriverWait(driver, 90).until(lambda driver: driver.find_element_by_id("tabDescr"))
-        download_sequences(driver)
-        driver.quit()
+        driver.maximize_window()
+        #download_sequences(driver)
+        pass
 
     except:
         res = WebDriverWait(driver,90).until(lambda driver: driver.find_element_by_id("noResInfo"))
