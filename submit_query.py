@@ -2,8 +2,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
 
+from redirect_page import redirect_page
+from arguments import *
+
 import time
 import os
+
 
 def make_action(driver):
     """
@@ -69,7 +73,6 @@ Functions below are responsible for:
     - opening more algorithm parameters
     - changing max target sequences to 5000
     - submitting BLAST button
-    - Quit
 
 Parameters:
 driver: selenium.webdriver object used in another functions.
@@ -78,6 +81,14 @@ Defined by function open_blast() in a open_browser.py file.
 action: selenium.actionchains object which allows to interact
 with a browser
 """
+
+def exclude_organism(driver, arg):
+
+    if arg is None:
+        pass
+    else:
+        checkbox = driver.find_element_by_xpath('//*[@id="orgExcl"]')
+        checkbox.click()
 
 def open_options(driver, action):
 
@@ -93,3 +104,20 @@ def click_button(driver):
 
     blast_btn = driver.find_element_by_class_name("blastbutton")
     blast_btn.click()
+
+def proceed_submit(driver):
+
+    time.sleep(10)
+
+    try:
+        cgi_context = driver.find_element_by_xpath('//*[@id="upgMsg"]')
+        if cgi_context.is_displayed():
+            raise "CGI Context Error occured, please try again"
+            driver.quit()
+        else:
+            pass
+
+    except:
+        redirect_page(driver)
+
+
