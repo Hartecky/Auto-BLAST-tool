@@ -1,123 +1,62 @@
+from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver import ActionChains
 
-from redirect_page import redirect_page
-from arguments import *
-
-import time
 import os
+import time
 
+# Destination paths
+file_path_1 = os.path.expanduser("~")+"\\Downloads\\downloaded_sequences.txt"
+file_path_2 = os.path.expanduser("~")+"\\Downloads\\seqdump.txt"
+download_folder = os.path.expanduser("~")+"\\Downloads"
 
-def make_action(driver):
+def check_file(file_to_check, path_1, path_2):
     """
-    Creates a selenium ActionChains object to
-    automate low level interactions on loaded website
+    Checks if a file 'seqdump.txt' is in a directory,
+    otherwise it waits untill it will appear
+
+    Parameters:
+    file_to_check: file name with a path, which we want to
+    download. The while loop is waiting for confirmed presence
+    of a provided file.
+
+    path_1: Downloads directiory path with a file name to be renamed.
+
+    path_2: File path with a name of a downloaded data.
+    """
+
+    while not os.path.exists(file_to_check):
+        time.sleep(1)
+
+    if os.path.isfile(file_to_check):
+        os.rename(file_to_check, file_path_1)
+    else:
+        raise ValueError("%s is not a file" % file_to_check)
+
+    return
+
+
+def download_sequences(driver):
+    """
+    Downloads all avalaible sequences returned in a query
+    search provided by function submit_values() in a submit_query.py file.
+    Runs only if redirect_page() will find avalaible sequences in a blast search.
 
     Parameters:
     driver: selenium.webdriver object used in another functions.
     Defined by function open_blast() in a open_browser.py file
+
     """
-    action = ActionChains(driver)
+    # On a redirected page find and choose download option
+    download_button = driver.find_element_by_xpath("//*[@id='btnDwnld']")
+    download_button.click()
 
-    return action
+    download_fasta = driver.find_element_by_xpath("//*[@id='dwFSTAl']")
+    download_fasta.click()
 
-def paste_sequence(driver, query):
-    """
-    Fills defined and located textarea with sequence (string),
-    provided by user.
-
-    Parameters:
-    driver: selenium.webdriver object used in another functions.
-    Defined by function open_blast() in a open_browser.py file.
-
-    query: sequence query provided by user.
-    """
-
-    search_sequence = driver.find_element_by_name("QUERY")
-    search_sequence.send_keys(query)
-    search_sequence.send_keys(Keys.RETURN)
+    # Function call to check downloading file existing
+    check_file(file_path_2, file_path_1, download_folder)
 
     return
-
-def paste_organism(driver, action, organism):
-    """
-    Fills defined and located textarea with organism name (string),
-    provided by user. Next, it waits for hints, and choses the first one.
-
-    Parameters:
-    driver: selenium.webdriver object used in another functions.
-    Defined by function open_blast() in a open_browser.py file.
-
-    action: selenium.actionchains object which allows to interact
-    with a browser
-
-    organism: organism name provided by user.
-    """
-
-    search_organism = driver.find_element_by_id("qorganism")
-    search_organism.send_keys(organism)
-
-    list_elem = driver.find_element_by_xpath("//input[@name='NUM_ORG']")
-
-    time.sleep(1)
-
-    action.send_keys(Keys.ARROW_DOWN).perform()
-    action.send_keys(Keys.ENTER).perform()
-
-    return
-
-"""
-Functions below are responsible for:
-    - checkbox select to show result in a new window
-    - opening more algorithm parameters
-    - changing max target sequences to 5000
-    - submitting BLAST button
-
-Parameters:
-driver: selenium.webdriver object used in another functions.
-Defined by function open_blast() in a open_browser.py file.
-
-action: selenium.actionchains object which allows to interact
-with a browser
-"""
-
-def exclude_organism(driver, arg):
-
-    if arg is None:
-        pass
-    else:
-        checkbox = driver.find_element_by_xpath('//*[@id="orgExcl"]')
-        checkbox.click()
-
-def open_options(driver, action):
-
-    algo_param = driver.find_element_by_id("algPar")
-    algo_param.click()
-
-def select_options(driver, action):
-
-    select_numbers = Select(driver.find_element_by_id("NUM_SEQ"))
-    select_numbers.select_by_value("1000")
-
-def click_button(driver):
-
-    blast_btn = driver.find_element_by_class_name("blastbutton")
-    blast_btn.click()
-
-def proceed_submit(driver):
-
-    time.sleep(10)
-
-    try:
-        cgi_context = driver.find_element_by_xpath('//*[@id="upgMsg"]')
-        if cgi_context.is_displayed():
-            raise "CGI Context Error occured, please try again"
-            driver.quit()
-        else:
-            pass
-
-    except:
-        redirect_page(driver)
 
 
