@@ -15,12 +15,10 @@ def redirect_page(driver):
     driver: selenium.webdriver object used in another functions.
     Defined by function open_blast() in a open_browser.py file
     """
-    print("FUNCTION IS STARTING")
+
     try:
-        print("Waiting start")
         WebDriverWait(driver, 90).until(lambda driver: driver.find_element_by_id("tabDescr"))
         driver.maximize_window()
-        #download_sequences(driver)
         pass
 
     except:
