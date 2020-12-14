@@ -28,4 +28,3 @@ def redirect_page(driver):
         if res_info is True:
             driver.quit()
 
-
