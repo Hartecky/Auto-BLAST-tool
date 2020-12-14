@@ -67,55 +67,65 @@ def paste_organism(driver, action, organism):
 
     return
 
-"""
-Functions below are responsible for:
-    - checkbox select to show result in a new window
-    - opening more algorithm parameters
-    - changing max target sequences to 5000
-    - submitting BLAST button
-
-Parameters:
-driver: selenium.webdriver object used in another functions.
-Defined by function open_blast() in a open_browser.py file.
-
-action: selenium.actionchains object which allows to interact
-with a browser
-"""
-
 def exclude_organism(driver, arg):
+    """
+    Finds 'exclude' checkbox and marks it if user provided true value through running
+
+    Parameters:
+    driver: selenium.webdriver object
+
+    arg: argument provided by user and parsed by argparse module
+    """
 
     if arg is None:
         pass
-    else:
+    elif arg is False:
+        pass
+    elif arg is True:
         checkbox = driver.find_element_by_xpath('//*[@id="orgExcl"]')
         checkbox.click()
 
 def open_options(driver, action):
 
+    """
+    Lists down additional options on NCBI nucleotide blast website
+    """
+
     algo_param = driver.find_element_by_id("algPar")
     algo_param.click()
 
-def select_options(driver, action):
+def select_options(driver, action, arg):
+
+    """
+    Finds 'max target sequence' list and selects a value provided by user. If not provided then the default value remains.
+    """
 
     select_numbers = Select(driver.find_element_by_id("NUM_SEQ"))
-    select_numbers.select_by_value("1000")
+
+    if arg is None:
+        pass
+    elif arg:
+        select_numbers.select_by_value(str(arg))
 
 def click_button(driver):
+
+    """
+    Finds submit button and clicks it
+    """
 
     blast_btn = driver.find_element_by_class_name("blastbutton")
     blast_btn.click()
 
 def proceed_submit(driver):
 
+    """
+    Checks whether the query was succesful by waiting for CGI context appearing. In other case web browser quits.
+    """
     time.sleep(10)
 
     try:
-        cgi_context = driver.find_element_by_xpath('//*[@id="upgMsg"]')
-        if cgi_context.is_displayed():
-            raise "CGI Context Error occured, please try again"
-            driver.quit()
-        else:
-            pass
+        cgi_context = driver.find_element_by_xpath("//*[@id='lpgMsg']/p")
+        driver.quit()
 
     except:
         redirect_page(driver)
