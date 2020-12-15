@@ -16,9 +16,10 @@ Compatible with Microsoft Edge only
 
 ---
 ### Requirements
-__Selenium module__
-
+- Selenium module
+```
 _pip install selenium_
+```
 
 __Microsoft Edge WebDriver__
 
