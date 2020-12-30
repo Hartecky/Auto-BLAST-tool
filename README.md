@@ -1,5 +1,4 @@
 # Remote sequence downloader
----
 
 ## Description:
 
