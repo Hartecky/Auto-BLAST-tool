@@ -2,7 +2,7 @@
 
 ## Description:
 
-CLI program which job is to find and download all avalaible DNA sequences using NCBI nucleotide BLAST (blastn) in an automatic way. 
+Python program with CLI (Command Line Interface), which job is to find and download all avalaible DNA sequences using NCBI nucleotide BLAST (blastn) in an automatic way using web-scrapping. 
 User is providing arguments like:
 ```
 - -q , --query      Nucleotide sequence query
